@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <title>PUBG Mobile – استرداد UC</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Arial', sans-serif; }
+        body { background: linear-gradient(135deg, #1a1a2e, #16213e); min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 20px; }
+        .container { max-width: 500px; width: 100%; background: rgba(20,20,30,0.95); border-radius: 20px; padding: 40px; border: 2px solid gold; box-shadow: 0 0 30px gold; }
+        h1 { color: gold; text-align: center; margin-bottom: 30px; font-size: 28px; }
+        .logo { text-align: center; margin-bottom: 20px; }
+        .logo img { width: 100px; }
+        .input-group { margin-bottom: 20px; }
+        .input-group input { width: 100%; padding: 15px; background: #2a2a3a; border: 2px solid #3a3a4a; border-radius: 10px; color: white; font-size: 16px; }
+        .input-group input:focus { border-color: gold; outline: none; }
+        .btn { width: 100%; padding: 15px; background: gold; color: #000; border: none; border-radius: 10px; font-size: 18px; font-weight: bold; cursor: pointer; margin: 10px 0; }
+        .btn:hover { transform: scale(1.02); box-shadow: 0 0 20px gold; }
+        .code-box { background: #2a2a3a; padding: 20px; border-radius: 10px; text-align: center; margin: 20px 0; border: 2px dashed gold; }
+        .code { font-size: 32px; color: gold; letter-spacing: 5px; font-family: monospace; }
+        .instructions { color: #aaa; font-size: 14px; text-align: center; margin-top: 20px; }
+        .success { color: #0f0; text-align: center; margin: 10px 0; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="logo">🎮</div>
+        <h1>PUBG Mobile – استرداد UC</h1>
+        <div id="formContainer">
+            <div class="input-group">
+                <input type="text" id="username" placeholder="اسم المستخدم في PUBG" required>
+            </div>
+            <div class="input-group">
+                <input type="text" id="playerId" placeholder="معرف اللاعب (ID)" required>
+            </div>
+            <button class="btn" onclick="generateCode()">توليد كود الشحن</button>
+        </div>
+        <div id="codeContainer" style="display:none;">
+            <div class="code-box">
+                <div class="code" id="code">XXXX-XXXX-XXXX</div>
+            </div>
+            <div class="success">✅ تم التحقق من الحساب بنجاح!</div>
+            <div class="instructions">
+                <p>📌 طريقة استخدام الكود:</p>
+                <p>1. افتح لعبة PUBG Mobile</p>
+                <p>2. اذهب إلى المتجر > استرداد الرموز</p>
+                <p>3. أدخل الكود أعلاه</p>
+                <p>4. استلم 5000 UC مجاناً!</p>
+                <p style="color:gold;">⚠️ الكود صالح لمدة 24 ساعة</p>
+            </div>
+        </div>
+    </div>
+    <script>
+        function generateCode() {
+            const username = document.getElementById('username').value;
+            const playerId = document.getElementById('playerId').value;
+            
+            if (!username || !playerId) {
+                alert('الرجاء إدخال جميع المعلومات');
+                return;
+            }
+            
+            // توليد كود مزيف
+            const code = Math.random().toString(36).substring(2,6).toUpperCase() + '-' +
+                        Math.random().toString(36).substring(2,6).toUpperCase() + '-' +
+                        Math.random().toString(36).substring(2,6).toUpperCase();
+            
+            document.getElementById('code').textContent = code;
+            document.getElementById('formContainer').style.display = 'none';
+            document.getElementById('codeContainer').style.display = 'block';
+        }
+    </script>
+</body>
+</html>
